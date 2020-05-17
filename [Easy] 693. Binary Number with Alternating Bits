@@ -1,0 +1,58 @@
+
+
+bool hasAlternatingBits(int n){
+    
+     if ( n == 1 || n == 2 )   {
+        return true; 
+    }
+    char* bitString = malloc(1000 * sizeof(char)); 
+    int i = 0; 
+    
+    while ( n > 0 ) {
+        int remainder = n % 2; 
+        n = n / 2; 
+       
+       // printf("n -> %d\n", n);
+        
+      //  printf("remainder -> %d\n", remainder); 
+        bitString[i] = remainder; 
+        i++; 
+    }
+    // NUMBERS ARE BACKWARDS, START AT THE END.
+    int x; 
+    for(x = 0; x < 10; x++) {
+        if ( bitString[x] == 1 )    {
+             break;
+        }
+    }
+    
+    
+    if ( i - x == 1 )   {
+        return false; 
+    }  
+    
+   
+    
+    for(int j = i; j > 0; j--) {
+        
+        // The first bit, check only left ( starts backwards )
+        if ( j + 1 > i)    {
+            
+            if ( bitString[j] == bitString[j-1] )  {
+                return false; 
+            }
+            
+        }   else if ( j - 1 < 0 ) { // The last bit, check right 
+           
+            if ( bitString[j] == bitString[j+1])   {
+                return false;
+            }  
+            
+        }   else if ( bitString[j] == bitString[j-1] || bitString[j] == bitString[j+1] ) { 
+                 return false; 
+        }
+    }
+    
+    return true; 
+    
+}
