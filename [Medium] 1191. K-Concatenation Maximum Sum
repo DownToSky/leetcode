@@ -1,0 +1,76 @@
+class Solution {
+//https://leetcode.com/problems/k-concatenation-maximum-sum/
+    int mod = (int) Math.pow(10,9)+7;
+    
+    public int kConcatenationMaxSum(int[] arr, int k) {
+        // Array is empty
+      if ( arr.length == 0 )    {
+          return 0; 
+      }
+    
+     long kaden = kadenAlgo(arr);
+        
+     if ( k == 1 )  {
+         return (int) kaden; 
+     }
+     
+        long prefixSum = prefixSum(arr);
+        long suffixSum = suffixSum(arr);
+        long sum = 0; 
+        
+        for(int i = 0; i < arr.length; i++) {
+            sum += arr[i]; 
+        }
+        
+        if ( sum > 0 )  {
+            return (int) Math.max(((sum*(k-2))%mod + suffixSum % mod + prefixSum % mod) % mod, kaden%mod);
+        }   else    {
+            return (int) Math.max((prefixSum % mod + suffixSum % mod) % mod, kaden%mod);
+        }
+        
+    }
+    
+    public long kadenAlgo(int [] ar)    {
+        long local_max = 0; 
+        long global_max = Integer.MIN_VALUE;
+        
+        for(int i = 0; i < ar.length; i++)  {
+            local_max = Math.max(ar[i], (ar[i] + local_max) % mod ); 
+            
+            if ( local_max > global_max )   {
+                global_max = local_max; 
+            }
+        }
+        
+        if ( global_max < 0 )   {
+            return 0; 
+        }
+        return global_max%mod;
+    }
+    
+    public long prefixSum(int [] ar)    {
+        long local_max = 0; 
+        long global_max = Integer.MIN_VALUE;
+        
+        for(int i = 0; i < ar.length; i++)  {
+            local_max = (ar[i] + local_max)%mod; 
+            global_max = Math.max(local_max, global_max);
+        }
+        
+        return global_max;
+    }
+    
+    public long suffixSum(int [] ar)    {
+        long local_max = 0; 
+        long global_max = Integer.MIN_VALUE; 
+        
+        for(int i = ar.length-1; i >= 0; i--)   {
+            local_max = (ar[i] + local_max)%mod; 
+            global_max = Math.max(local_max, global_max);
+        }
+        
+        return global_max;
+    }
+    
+    
+}
