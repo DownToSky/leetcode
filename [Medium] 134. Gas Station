@@ -1,0 +1,42 @@
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int fuel = 0; 
+        int start = 0; 
+        int walk = 0; 
+        
+        for(start = 0; start < gas.length; start++) {
+            fuel += gas[start];
+            walk = start; 
+            
+                while (true)   {
+                    fuel -= cost[walk];
+                    
+                    if ( fuel < 0 ) {
+                        fuel = 0; 
+                        break;
+                    }   else    {
+                        if ( walk + 1 == cost.length )   {
+                            walk = -1; 
+                        }
+                        fuel += gas[++walk];
+                    }
+                    
+                    if ( walk == start )    {
+                        return start; 
+                    }
+                }
+        }
+        
+        return -1;
+    }
+    
+   /* Brute force method   
+      
+      We simply go through the process by running two loops and going through each possibility. 
+      I do not think this is an effcient method of doing it. I believe that the Big-O runtime is O(N^2)     
+      because it will go through the arrays again if it has found a match. 
+
+      Best case: O(n) ---> If the circuit cannot be completed at all. 
+      Worse case: O(n^2) ---> If the circuit can be completed then we will have to go the array starting at the 
+                              beginning. 
+}
