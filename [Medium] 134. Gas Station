@@ -39,4 +39,34 @@ class Solution {
       Best case: O(n) ---> If the circuit cannot be completed at all. 
       Worse case: O(n^2) ---> If the circuit can be completed then we will have to go the array starting at the 
                               beginning. 
+    */
+    
+    /* One pass method 
+           public static int canCompleteCircuit(int [] gas, int [] cost)   {
+        int [] track = new int [3];
+        int [] track2 = new int [3];
+        
+        int start = 0; 
+        int tank = EMPTY; 
+        int total = EMPTY;
+        int i = 0; 
+        
+        for(int station = 0, count = gas.length; station < count; ++station)    {
+            int fuel = gas[station] - cost[station]; 
+            tank += fuel; 
+            total += fuel;
+            track[i] = tank; 
+            track2[i] = total;
+            
+            if ( tank < EMPTY ) {
+                tank = EMPTY; 
+                start = station + 1; 
+            }
+            i++;
+        }
+      //  printArray(track, track2);
+        return total < EMPTY?  -1 : start;
+    }
+    
+    */
 }
